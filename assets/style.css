@@ -135,6 +135,7 @@ button {
 .playlist {
   grid-column: 1/3;
   grid-row: 5/10;
+  overflow: scroll;
 }
 .playlist > div {
   padding: 15px 5px;
@@ -180,4 +181,11 @@ audio {
     border-radius: 15px;
     width: 90%;
     background-color: inherit;
+}
+
+/*DOM elements*/
+input {
+  color: black;
+  padding: 15px 5px;
+  border-radius: 15px;
 }

@@ -3,7 +3,7 @@ const app = express();
 const mysql = require('mysql');
 //Write your params here
 const databaseName = 'example';
-const databasePassword ='password1234';
+const databasePassword = 'password1234';
 
 app.use(express.static('assets'));
 app.use(express.static('views'));
@@ -25,19 +25,20 @@ connection.connect(err => {
 });
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html', {root: __dirname});
-    });
+  res.sendFile('index.html', { root: __dirname });
+});
 
+app.get('/playlist', (req,res) => {
+  
+})
 //sql query
 app.get('/books/', (req, res) => {
-  connection.query('select * from',
-    (err, rows) => {
-      if (err) {
-        console.log(err.message);
-      }
-      res.send(rows);
+  connection.query('select * from', (err, rows) => {
+    if (err) {
+      console.log(err.message);
     }
-  );
+    res.send(rows);
+  });
 });
 
 module.exports = app;
