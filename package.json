@@ -1,0 +1,32 @@
+{
+  "name": "foxplayer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kosztolanyi/foxplayer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kosztolanyi/foxplayer/issues"
+  },
+  "homepage": "https://github.com/Kosztolanyi/foxplayer#readme",
+  "devDependencies": {
+    "supertest": "^4.0.2",
+    "tape": "^4.11.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "node-fetch": "^2.6.0"
+  }
+}
