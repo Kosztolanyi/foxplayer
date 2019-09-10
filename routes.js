@@ -10,14 +10,13 @@ const databasePassword = 'password1234';
 app.use(express.static('assets'));
 app.use(express.static('views'));
 
-async function sendMetadata(data) {
-  let tracks = new Array();
-  await data.forEach(e => {
-    mm(fs.createReadStream(e.path), (err, metadata) => {
+function collectMetaData(e) {
+  return new Promise((resolve, reject) => {
+    mm(fs.createReadStream(e.path), { duration: true }, (err, metadata) => {
       if (err) {
-        throw err;
+        reject(err);
       } else {
-        tracks.push({
+        resolve({
           title: metadata.title,
           artist: metadata.artist[0],
           album: metadata.album,
@@ -27,10 +26,7 @@ async function sendMetadata(data) {
       }
     });
   });
-  console.log(tracks);
-  return tracks;
 }
-
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -51,33 +47,15 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: __dirname });
 });
 
-// app.get('/playlist', (req, res) => {});
+app.get('/playlist', (req, res) => {});
 
 //sql query
 app.get('/tracks', (req, res) => {
-  connection.query('select * from tracks', (err, rows) => {
+  connection.query('select * from tracks', async (err, rows) => {
     if (err) {
       console.log(err.message);
     }
-    let tracks = new Array();
-    rows.forEach(e => {
-      mm(fs.createReadStream(e.path), (err, metadata) => {
-        if (err) {
-          throw err;
-        } else {
-          tracks.push({
-            title: metadata.title,
-            artist: metadata.artist[0],
-            album: metadata.album,
-            duration: metadata.duration,
-            path: e.path
-          });
-        }
-      });
-    });
-    setTimeout(function() {
-      res.send(JSON.stringify(tracks));
-    }, 100);
+    res.send(await Promise.all(rows.map(collectMetaData)));
   });
 });
 

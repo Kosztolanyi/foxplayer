@@ -10,7 +10,18 @@ const audio = document.querySelector('audio');
 window.addEventListener('load', e => {
   fetch('/tracks')
     .then(res => res.json())
-    .then(console.log);
+    .then(json => {console.log(json);
+      //json[0]
+      // for (let i = 1; json.lenght - 1; i++) {
+      //   let li = document.createElement('li');
+      //   let span1 = document.createElement('span');
+      //   let span2 = document.createElement('span');
+      //   span1.innerText = json[0].title;
+      //   span2.innerText = json[0].duration;
+      //   li.appendChild(span1, span2);
+      //   tracks.appendChild(li);
+      }
+    });
 });
 
 audio.addEventListener('loadstart', e => {
@@ -54,13 +65,6 @@ document.addEventListener('keypress', e => {
         audio.pause();
       } else {
         audio.play();
-      }
-      break;
-    case 109:
-      if (audio.muted) {
-        audio.muted = false;
-      } else {
-        audio.muted = true;
       }
       break;
   }
