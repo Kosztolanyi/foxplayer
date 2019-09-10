@@ -6,7 +6,7 @@ const mm = require('musicmetadata');
 //Write your params here
 const databaseName = 'foxplayer';
 const databasePassword = 'password1234';
-
+app.use(express.json());
 app.use(express.static('assets'));
 app.use(express.static('views'));
 
@@ -55,7 +55,19 @@ app.get('/playlist', (req, res) => {
     res.send(rows);
   });
 });
-
+app.post('/playlists', (req,res) => {
+  const newPlaylist = req.body.playlist;
+  connection.query('INSERT INTO playlists(playlist) value(?);', newPlaylist, (err, rows) => {
+    if (err) {
+      console.log(err.message);
+      res.status(401);
+      return;
+    }
+    res.status(200);
+    res.send(rows);
+  });
+  // res.sendStatus(200);
+})
 //sql query
 app.get('/tracks', (req, res) => {
   connection.query('select * from tracks', async (err, rows) => {

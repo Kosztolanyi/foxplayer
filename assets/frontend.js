@@ -7,6 +7,16 @@ const tracks = document.querySelector('ol');
 const playlists = document.querySelector('.playlist');
 const audio = document.querySelector('audio');
 
+function createDivToPlaylist(innerText,id) {
+  let div = document.createElement('div');
+  div.innerHTML = innerText;
+  div.id = id;
+  div.className = 'tracks-in-list';
+  let button = document.createElement('button');
+  button.innerHTML = '<i class="far fa-trash-alt"></i>';
+  div.appendChild(button);
+  return div;
+}
 window.addEventListener('load', e => {
   fetch('/tracks')
     .then(res => res.json())
@@ -34,12 +44,10 @@ window.addEventListener('load', e => {
 window.addEventListener('load', e => {
   fetch('/playlist')
     .then(res => res.json())
-    .then(json => {console.log(json);
+    .then(json => {
       json.forEach(e => {
         if (e.playlist !== '0') {
-          let div = document.createElement('div');
-          div.innerHTML = e.playlist;
-          playlists.appendChild(div);
+          playlists.appendChild(createDivToPlaylist(e.playlist,e.id));
         }
       });
     })
@@ -63,22 +71,33 @@ addPlaylist.addEventListener('click', e => {
     return;
   } else {
     e.preventDefault();
-    let newPlaylist = document.createElement('input');
     alert('Type & hit enter!');
+    let newPlaylist = document.createElement('input');
     newPlaylist.setAttribute('type', 'text');
     playlists.appendChild(newPlaylist);
     newPlaylist.focus();
     let input = document.querySelector('input');
     input.addEventListener('keypress', e => {
       if (e.key === 'Enter') {
-        let newDiv = document.createElement('div');
-        newDiv.innerText = input.value;
-        playlists.removeChild(playlists.lastChild);
-        playlists.appendChild(newDiv);
+        fetch('/playlists', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ playlist: input.value })
+        })
+          .then(res => res.json())
+          .then(json => {
+            console.log(json);
+            let newDiv = createDivToPlaylist(input.value,json.insertId);
+            playlists.removeChild(playlists.lastChild);
+            playlists.appendChild(newDiv);
+          });
       }
     });
   }
 });
+
 document.addEventListener('keypress', e => {
   switch (e.charCode) {
     case 32:

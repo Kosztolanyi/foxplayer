@@ -189,3 +189,13 @@ input {
   padding: 15px 5px;
   border-radius: 15px;
 }
+.tracks-in-list {
+  display: flex;
+  justify-content: space-between;
+}
+.fa-trash-alt {
+  visibility: hidden;
+}
+.fa-trash-alt:hover {
+  visibility: visible;
+}
