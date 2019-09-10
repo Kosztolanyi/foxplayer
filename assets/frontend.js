@@ -10,20 +10,41 @@ const audio = document.querySelector('audio');
 window.addEventListener('load', e => {
   fetch('/tracks')
     .then(res => res.json())
-    .then(json => {console.log(json);
-      //json[0]
-      // for (let i = 1; json.lenght - 1; i++) {
-      //   let li = document.createElement('li');
-      //   let span1 = document.createElement('span');
-      //   let span2 = document.createElement('span');
-      //   span1.innerText = json[0].title;
-      //   span2.innerText = json[0].duration;
-      //   li.appendChild(span1, span2);
-      //   tracks.appendChild(li);
-      }
+    .then(json => {
+      let h2 = document.querySelector('.details > h2');
+      h2.innerText = json[0].title;
+      let p = document.querySelector('.details > p');
+      p.innerText = json[0].artist;
+      json.forEach(e => {
+        let li = document.createElement('li');
+        let span1 = document.createElement('span');
+        let span2 = document.createElement('span');
+        span2.className = 'time';
+        span1.innerText = e.title;
+        span2.innerText = `${Math.floor(e.duration / 60)}:${Math.floor(
+          e.duration
+        ) -
+          Math.floor(e.duration / 60) * 60}`;
+        li.appendChild(span1);
+        li.appendChild(span2);
+        tracks.appendChild(li);
+      });
     });
 });
-
+window.addEventListener('load', e => {
+  fetch('/playlist')
+    .then(res => res.json())
+    .then(json => {console.log(json);
+      json.forEach(e => {
+        if (e.playlist !== '0') {
+          let div = document.createElement('div');
+          div.innerHTML = e.playlist;
+          playlists.appendChild(div);
+        }
+      });
+    })
+    .catch(console.log);
+});
 audio.addEventListener('loadstart', e => {
   console.log(`${e.type} happened`);
 });

@@ -47,7 +47,14 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: __dirname });
 });
 
-app.get('/playlist', (req, res) => {});
+app.get('/playlist', (req, res) => {
+  connection.query('select * from playlists;', async (err, rows) => {
+    if (err) {
+      console.log(err.message);
+    }
+    res.send(rows);
+  });
+});
 
 //sql query
 app.get('/tracks', (req, res) => {
