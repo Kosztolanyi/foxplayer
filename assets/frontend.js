@@ -6,7 +6,13 @@ const addToFavorites = document.querySelector('.favorite');
 const tracks = document.querySelector('ol');
 const playlists = document.querySelector('.playlist');
 const audio = document.querySelector('audio');
-console.log(audio);
+
+window.addEventListener('load', e => {
+  fetch('/tracks')
+    .then(res => res.json())
+    .then(console.log);
+});
+
 audio.addEventListener('loadstart', e => {
   console.log(`${e.type} happened`);
 });
@@ -60,11 +66,11 @@ document.addEventListener('keypress', e => {
   }
 });
 document.addEventListener('keyup', e => {
-    if(e.key === 'Escape') {
-        if (audio.muted) {
-            audio.muted = false;
-          } else {
-            audio.muted = true;
-          }
+  if (e.key === 'Escape') {
+    if (audio.muted) {
+      audio.muted = false;
+    } else {
+      audio.muted = true;
     }
-} )
+  }
+});
