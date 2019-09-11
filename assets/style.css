@@ -194,3 +194,7 @@ input {
   display: flex;
   justify-content: space-between;
 }
+li[name="onPlay"] {
+  border-radius: 15px;
+  border: 2px solid whitesmoke;
+}

@@ -23,7 +23,8 @@ function collectMetaData(row) {
           artist: metadata.artist[0],
           album: metadata.album,
           duration: metadata.duration,
-          path: row.path
+          path: row.path,
+          id: row.id
         });
       }
     });
@@ -82,6 +83,20 @@ app.get('/tracks', (req, res) => {
     }
     res.send(await Promise.all(rows.map(collectMetaData)));
   });
+});
+app.get('/tracks/:id', (req, res) => {
+  connection.query(
+    'select * from tracks where id=?',
+    [req.params.id],
+    async (err, rows) => {
+      if (err) {
+        console.log(err.message);
+        return;
+      }
+      collectMetaData(rows[0]).then(result => res.send(result));
+      // await collectMetaData(rows)
+    }
+  );
 });
 app.delete('/playlists/:id', (req, res) => {
   connection.query(

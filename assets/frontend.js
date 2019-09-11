@@ -6,7 +6,6 @@ const addToFavorites = document.querySelector('.favorite');
 const tracks = document.querySelector('ol');
 const playlists = document.querySelector('.playlist');
 const audio = document.querySelector('audio');
-const deletebuttons = document.q;
 //FUNCTIONS
 function createDivToPlaylist(innerText, id) {
   let div = document.createElement('div');
@@ -42,6 +41,7 @@ window.addEventListener('load', e => {
         li.appendChild(span2);
         tracks.appendChild(li);
       });
+      tracks.firstChild.setAttribute('name', 'onPlay');
     });
 });
 window.addEventListener('load', e => {
@@ -123,6 +123,25 @@ document.querySelector('.playlist').addEventListener('click', e => {
     );
   }
 });
+//Track Picker
+tracks.addEventListener('click', e => {
+  fetch(`/tracks/${e.target.parentNode.className}`)
+    .then(res => res.json())
+    .then(json => {
+      document.querySelectorAll('li').forEach(li => {
+        if (li.className == json.id) {
+          li.setAttribute('name', 'onPlay');
+        } else {
+          li.setAttribute('name', '');
+        }
+      });
+      audio.setAttribute('src', `.${json.path.slice(8)}`);
+      document.querySelector('.details > h2').innerText = json.title;
+      document.querySelector('.details > p').innerText = json.album;
+    });
+});
+//ADD TO FAVOURITE
+addToFavorites.addEventListener('click', e => {});
 //KEYPRESS
 document.addEventListener('keypress', e => {
   switch (e.charCode) {
