@@ -6,8 +6,8 @@
   font-weight: 300;
   box-shadow: none;
   border: none;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: rgb(253, 242, 253);
 }
 
@@ -128,8 +128,8 @@ p {
   padding: 20px;
 }
 button {
-    margin: 4px;
-    padding: 4px auto;
+  margin: 4px;
+  padding: 4px auto;
   background-color: rgba(0, 0, 0, 0.00001);
 }
 .playlist {
@@ -148,21 +148,22 @@ button {
   padding-left: 40px;
   padding-right: 20px;
   overflow: scroll;
-
 }
 .tracks > ol > li {
   width: 100%;
   text-align: justify;
 }
 li {
-    margin: 5px auto;
-    padding: 5px;
+  margin: 5px auto;
+  padding: 5px;
 }
-li:hover,button:hover, .playlist >div:hover {
-    cursor: pointer;
-    background-color: rgba(255,255,255,0.2);
-    border-radius: 15px;
-    border: 2px solid rgb(91, 23, 117);
+li:hover,
+button:hover,
+.playlist > div:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  border: 2px solid rgb(91, 23, 117);
 }
 .time {
   float: right;
@@ -178,9 +179,9 @@ li:hover,button:hover, .playlist >div:hover {
   background-color: inherit;
 }
 audio {
-    border-radius: 15px;
-    width: 90%;
-    background-color: inherit;
+  border-radius: 15px;
+  width: 90%;
+  background-color: inherit;
 }
 
 /*DOM elements*/
@@ -192,10 +193,4 @@ input {
 .tracks-in-list {
   display: flex;
   justify-content: space-between;
-}
-.fa-trash-alt {
-  visibility: hidden;
-}
-.fa-trash-alt:hover {
-  visibility: visible;
 }
