@@ -95,25 +95,28 @@ addPlaylist.addEventListener('click', e => {
         })
           .then(res => res.json())
           .then(json => {
-            console.log(json);
-            let newDiv = createDivToPlaylist(input.value, json.insertId);
-            playlists.removeChild(playlists.lastChild);
-            playlists.appendChild(newDiv);
+            if (json.success) {
+              let newDiv = createDivToPlaylist(input.value, json.insertId);
+              playlists.removeChild(playlists.lastChild);
+              playlists.appendChild(newDiv);
+            } else {
+              let errorMessage = document.querySelector('.logo > p');
+              alert(`There is already a playlist called ${input.value}`);
+              errorMessage.innerText = `There is already a playlist called ${input.value}`;
+              playlists.removeChild(playlists.lastChild);
+            }
           });
       }
     });
   }
 });
 document.querySelector('.playlist').addEventListener('click', e => {
-  console.log(e.target.className);
   if (e.target.className === 'far fa-trash-alt') {
     const audioId = `${e.target.parentElement.className}`;
-    console.log(audioId);
     fetch(`/playlists/${audioId}`, {
       method: 'DELETE'
     })
       .then(res => res.json())
-      .then(json => console.log(json, 'ok'))
       .catch(console.log);
     e.target.parentNode.parentNode.parentNode.removeChild(
       e.target.parentNode.parentNode
